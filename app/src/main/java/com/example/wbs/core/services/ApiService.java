@@ -63,6 +63,17 @@ public interface ApiService {
     @GET("user/kriteria")
     Call<ResponseApiModel<List<KriteriaModel>>> getKriteria();
 
+    @FormUrlEncoded
+    @POST("admin/tanggapan/store")
+    Call<ResponseApiModel> adminStoreChat(
+            @FieldMap HashMap<String, Object> data);
+
+    @FormUrlEncoded
+    @POST("admin/pengaduan/update")
+    Call<ResponseApiModel> adminUpdateStatus(
+            @FieldMap HashMap<String, Object> data);
+
+
 //
 //    @FormUrlEncoded
 //    @POST("login")

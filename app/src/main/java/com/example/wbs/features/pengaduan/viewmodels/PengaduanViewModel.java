@@ -7,6 +7,7 @@ import com.example.wbs.core.models.ResponseApiModel;
 import com.example.wbs.features.pengaduan.model.PengaduanModel;
 import com.example.wbs.features.pengaduan.repositories.PengaduanRepository;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -36,4 +37,8 @@ public class PengaduanViewModel extends ViewModel {
    public LiveData<ResponseApiModel> storePengaduan(Map<String, RequestBody> map, MultipartBody.Part file, boolean isWithImage) {
         return pengaduanRepository.storePengaduan(map, file, isWithImage);
    }
+
+    public LiveData<ResponseApiModel> updatePengaduan(HashMap<String, Object> data) {
+        return pengaduanRepository.updatePengaduan(data);
+    }
 }

@@ -48,16 +48,39 @@
                         android:id="@+id/tvUsername"
                         android:textColor="@color/black"
                         android:gravity="center"
-                        android:layout_toLeftOf="@id/ivAvatar"
+                        android:layout_toLeftOf="@id/rlAction2"
                         android:textSize="@dimen/_12ssp"/>
 
-                    <de.hdodenhof.circleimageview.CircleImageView
-                        android:layout_width="@dimen/_30sdp"
+                    <RelativeLayout
                         android:layout_marginLeft="@dimen/_10sdp"
-                        android:id="@+id/ivAvatar"
-                        android:layout_height="@dimen/_30sdp"
+                        android:layout_width="wrap_content"
                         android:layout_alignParentRight="true"
-                        android:src="@drawable/iv_avatar"/>
+
+                        android:id="@+id/rlAction2"
+
+                        android:layout_height="wrap_content">
+
+
+                        <com.google.android.material.button.MaterialButton
+                            android:layout_width="wrap_content"
+                            android:text="Ubah"
+                            android:fontFamily="@font/popmed"
+                            android:layout_centerVertical="true"
+                            android:textSize="@dimen/_10ssp"
+                            android:id="@+id/btnUbahStatus"
+                            android:visibility="gone"
+                            android:layout_height="wrap_content"/>
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:layout_width="@dimen/_30sdp"
+                            android:layout_centerVertical="true"
+                            android:id="@+id/ivAvatar"
+                            android:visibility="gone"
+                            android:layout_height="@dimen/_30sdp"
+                            android:src="@drawable/iv_avatar"/>
+
+                    </RelativeLayout>
+
 
                 </RelativeLayout>
             </LinearLayout>
@@ -272,6 +295,93 @@
 
             </RelativeLayout>
 
+        </RelativeLayout>
+
+
+        <View
+            android:layout_width="match_parent"
+            android:background="@color/overlay"
+            android:id="@+id/vOverlay"
+            android:visibility="gone"
+            android:layout_height="match_parent"/>
+
+
+        <!--        Bottom sheet bar rating -->
+
+        <RelativeLayout
+            android:id="@+id/bottomSheetRating"
+            android:layout_width="match_parent"
+            android:padding="@dimen/_10sdp"
+            android:paddingTop="@dimen/_14sdp"
+            android:background="@drawable/bg_bottomsheet"
+            app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <com.google.android.material.bottomsheet.BottomSheetDragHandleView
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="center"
+                    app:tint="@color/primary"
+                    android:layout_height="wrap_content"/>
+
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/_7sdp"
+                    android:text="Ubah status"
+                    android:includeFontPadding="false"
+                    android:fontFamily="@font/popsem"
+                    android:layout_centerVertical="true"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_14ssp"/>
+
+                <com.chivorn.smartmaterialspinner.SmartMaterialSpinner
+                    app:smsp_outlinedBoxColor="@color/black"
+                    android:id="@+id/spinnerStatus"
+                    android:layout_marginTop="@dimen/_10sdp"
+
+                    android:layout_width="match_parent"
+                    app:smsp_hint="Status"
+                    android:layout_height="wrap_content"
+                    app:smsp_itemSize="@dimen/_12ssp"
+                    app:smsp_autoSelectable="true"
+                    app:smsp_baseColor="@color/primary"
+                    app:smsp_hintColor="@color/primary"
+                    app:smsp_selectedItemListColor="@color/primary"
+                    app:smsp_itemListBackgroundColor="@color/white"
+
+                    app:smsp_isOutlined="true"
+                    app:smsp_floatingLabelText="Role"
+                    app:smsp_alwaysShowFloatingLabel="true"
+                    app:smsp_enableFloatingLabel="true"
+                    app:smsp_multilineError="false" />
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:layout_height="wrap_content">
+                    <ProgressBar
+                        android:layout_width="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/progresBarStore"/>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:layout_width="match_parent"
+                        android:fontFamily="@font/popmed"
+                        android:textSize="@dimen/_12ssp"
+                        android:id="@+id/btnStoreCart"
+                        android:text="Simpan"
+                        android:layout_height="wrap_content"/>
+                </RelativeLayout>
+
+            </LinearLayout>
         </RelativeLayout>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

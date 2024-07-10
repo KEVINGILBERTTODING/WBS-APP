@@ -106,4 +106,30 @@ public class PengaduanRepository {
        }
         return responseApiModelMutableLiveData;
     }
+
+    public LiveData<ResponseApiModel> updatePengaduan(HashMap<String, Object>data) {
+        MutableLiveData<ResponseApiModel> responseApiModelMutableLiveData = new MutableLiveData<>();
+        apiService.adminUpdateStatus(data).enqueue(new Callback<ResponseApiModel>() {
+            @Override
+            public void onResponse(Call<ResponseApiModel> call, Response<ResponseApiModel> response) {
+                if (response.isSuccessful() ) {
+                    responseApiModelMutableLiveData.postValue(new ResponseApiModel<>(true, Constants.SUCCESS, null));
+
+                }else  {
+                    Gson gson = new Gson();
+                    ResponseApiModel responseApiModel = gson.fromJson(response.errorBody().charStream(), ResponseApiModel.class);
+                    responseApiModelMutableLiveData.postValue(new ResponseApiModel<>(false, responseApiModel.getMessage(), null));
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseApiModel> call, Throwable t) {
+                Log.d("TAG", "onFailure: " + t.getMessage());
+                responseApiModelMutableLiveData.postValue(new ResponseApiModel<>(false, Constants.SERVER_ERROR, null));
+
+            }
+        });
+        return responseApiModelMutableLiveData;
+    }
 }

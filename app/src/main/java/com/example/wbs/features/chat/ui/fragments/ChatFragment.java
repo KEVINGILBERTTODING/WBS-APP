@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -22,11 +23,14 @@ import com.example.wbs.core.models.SharedUserModel;
 import com.example.wbs.core.services.ApiService;
 import com.example.wbs.core.services.UserService;
 import com.example.wbs.databinding.FragmentChatBinding;
+import com.example.wbs.features.SpinnerAdapter;
 import com.example.wbs.features.auth.ui.activities.AuthActivity;
 import com.example.wbs.features.chat.models.ChatModel;
 import com.example.wbs.features.chat.ui.adapters.ChatAdapter;
 import com.example.wbs.features.chat.viewmodels.ChatViewModel;
 import com.example.wbs.features.pengaduan.model.PengaduanModel;
+import com.example.wbs.features.pengaduan.viewmodels.PengaduanViewModel;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -48,6 +52,10 @@ public class ChatFragment extends Fragment {
     private boolean isPengadu = false;
     private FragmentChatBinding binding;
     private PengaduanModel pengaduanModel;
+    private String statusSelected = "0";
+    private BottomSheetBehavior bottomSheetStore;
+    private PengaduanViewModel pengaduanViewModel;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -76,6 +84,7 @@ public class ChatFragment extends Fragment {
 
     private void init() {
         chatViewModel = new ViewModelProvider(this).get(ChatViewModel.class);
+        pengaduanViewModel = new ViewModelProvider(this).get(PengaduanViewModel.class);
         if (pengaduanModel != null) {
             userService = new UserService();
             userService.initSharedPref(requireContext());
@@ -83,15 +92,45 @@ public class ChatFragment extends Fragment {
             if (sharedUserModel.getRole().equals("pengguna")) {
                 binding.tvUsername.setText("Live chat");
                 isPengadu = true;
+                binding.ivAvatar.setVisibility(View.VISIBLE);
 
             }else {
                 binding.tvUsername.setText(pengaduanModel.getNama());
+                binding.btnUbahStatus.setVisibility(View.VISIBLE);
                 isPengadu = false;
             }
+            initbottomsheet();
+            initStatus();
 
             getPost();
         }
 
+    }
+
+    private void initStatus() {
+        List<String> statusList = new ArrayList<>();
+        statusList.add("pending");
+        statusList.add("proses");
+        statusList.add("selesai");
+        SpinnerAdapter<String> spinnerAdapter = new SpinnerAdapter<>(requireContext(), statusList);
+        binding.spinnerStatus.setAdapter(spinnerAdapter);
+        binding.spinnerStatus.setSelection(0);
+        binding.spinnerStatus.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                statusSelected = statusList.get(position);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
+
+    private void initbottomsheet() {
+        setUpBottomSheet();
+        bottomSheetStore.setState(BottomSheetBehavior.STATE_HIDDEN);
     }
 
     private void listener() {
@@ -99,6 +138,35 @@ public class ChatFragment extends Fragment {
         );
 
         binding.btnSend.setOnClickListener(v -> formValidate());
+        
+        binding.btnUbahStatus.setOnClickListener(v -> showBottomSheet());
+        binding.vOverlay.setOnClickListener(v -> hideBottomSheet());
+        
+        binding.btnStoreCart.setOnClickListener(v  -> updateStatus());
+    }
+
+    private void updateStatus() {
+
+        HashMap<String, Object> data = new HashMap<>();
+        data.put("status", statusSelected);
+        data.put("id", pengaduanModel.getId_pengaduan());
+
+        binding.progresBarStore.setVisibility(View.VISIBLE);
+        binding.btnStoreCart.setVisibility(View.GONE);
+        pengaduanViewModel.updatePengaduan(data).observe(getViewLifecycleOwner(), new Observer<ResponseApiModel>() {
+            @Override
+            public void onChanged(ResponseApiModel responseApiModel) {
+                binding.progresBarStore.setVisibility(View.GONE);
+                binding.btnStoreCart.setVisibility(View.VISIBLE);
+                if (responseApiModel.getStatus()) {
+                    showToast("Berhasil mengubah status");
+                    hideBottomSheet();
+                    requireActivity().getSupportFragmentManager().popBackStack();
+                }else {
+                    showToast(responseApiModel.getMessage());
+                }
+            }
+        });
     }
 
     private void formValidate() {
@@ -113,13 +181,11 @@ public class ChatFragment extends Fragment {
             return;
         }
 
-        if (isPengadu) {
-            HashMap<String, Object> data = new HashMap<>();
-            data.put("user_id", sharedUserModel.getUser_id());
-            data.put("id_pengaduan", pengaduanModel.getId_pengaduan());
-            data.put("tanggapan", binding.etIsiLaporan.getText().toString());
-            storeChat(data);
-        }
+        HashMap<String, Object> data = new HashMap<>();
+        data.put("user_id", sharedUserModel.getUser_id());
+        data.put("id_pengaduan", pengaduanModel.getId_pengaduan());
+        data.put("tanggapan", binding.etIsiLaporan.getText().toString());
+        storeChat(data);
 
         binding.btnSend.setOnClickListener(v -> formValidate());
     }
@@ -218,6 +284,50 @@ public class ChatFragment extends Fragment {
         });
 
     }
+
+    private void setUpBottomSheet() {
+
+
+        bottomSheetStore = BottomSheetBehavior.from(binding.bottomSheetRating);
+        bottomSheetStore.setHideable(true);
+
+        bottomSheetStore.addBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+            @Override
+            public void onStateChanged(@NonNull View bottomSheet, int newState) {
+                if (newState == BottomSheetBehavior.STATE_HIDDEN) {
+                    hideBottomSheet();
+
+                }
+            }
+
+            @Override
+            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+
+            }
+        });
+
+
+    }
+
+    private void showBottomSheet() {
+
+        binding.vOverlay.setVisibility(View.VISIBLE);
+
+        bottomSheetStore.setState(BottomSheetBehavior.STATE_COLLAPSED);
+    }
+
+    private void hideBottomSheet() {
+        bottomSheetStore.setState(BottomSheetBehavior.STATE_HIDDEN);
+        binding.vOverlay.setVisibility(View.GONE);
+        clearInputCart();
+    }
+
+    private void clearInputCart() {
+        binding.spinnerStatus.setSelection(0);
+        statusSelected = "0";
+       
+    }
+
 
     private void showToast(String message) {
         Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();

@@ -42,6 +42,25 @@ public class ChatRepository {
 
                 }
             });
+        }else {
+            apiService.adminStoreChat(data).enqueue(new Callback<ResponseApiModel>() {
+                @Override
+                public void onResponse(Call<ResponseApiModel> call, Response<ResponseApiModel> response) {
+                    if (response.isSuccessful()) {
+                        responseApiModelMutableLiveData.postValue(new ResponseApiModel(true, Constants.SUCCESS, null));
+                    }else {
+                        responseApiModelMutableLiveData.postValue(new ResponseApiModel(false, Constants.SOMETHING_WENT_WRONG, null));
+
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ResponseApiModel> call, Throwable t) {
+                    responseApiModelMutableLiveData.postValue(new ResponseApiModel(false, Constants.SERVER_ERROR, null));
+
+
+                }
+            });
         }
         return responseApiModelMutableLiveData;
     }

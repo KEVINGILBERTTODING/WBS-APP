@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        tools:context=".features.pengaduan.ui.fragments.PengaduanFragment">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_margin="@dimen/_10sdp"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Profil"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/popsem"
+                    android:textSize="@dimen/_12ssp"/>
+
+
+
+
+
+            </LinearLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="wrap_content"
+                android:id="@+id/btnLogOut"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                app:backgroundTint="@color/red"
+                android:textColor="@color/white"
+                android:text="Keluar"/>
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:layout_centerInParent="true"
+                android:id="@+id/lrAccessDenied"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:textColor="@color/primary"
+                    android:layout_gravity="center"
+                    android:textSize="@dimen/_14ssp"
+                    android:fontFamily="@font/popsem"
+                    android:layout_height="wrap_content"
+                    android:text="Akses Ditolak!"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_10ssp"
+                    android:fontFamily="@font/popmed"
+                    android:layout_gravity="center"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:text="Untuk mengakses fitur ini anda harus login terlebih dahulu."/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:id="@+id/btnLogin"
+                    android:layout_height="wrap_content"
+                    android:text="Login"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:id="@+id/lrEmpty"
+                android:visibility="gone"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:textColor="@color/primary"
+                    android:layout_gravity="center"
+                    android:textSize="@dimen/_14ssp"
+                    android:fontFamily="@font/popsem"
+                    android:layout_height="wrap_content"
+                    android:text="Tidak ada aduan!"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_10ssp"
+                    android:fontFamily="@font/popmed"
+                    android:layout_gravity="center"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:text="Riwayat aduan anda akan muncul di sini."/>
+
+
+            </LinearLayout>
+
+
+
+
+
+        </RelativeLayout>
+
+
+
+        <View
+            android:layout_width="match_parent"
+            android:background="@color/overlay"
+            android:id="@+id/vOverlay"
+            android:visibility="gone"
+            android:layout_height="match_parent"/>
+
+
+        <!--        Bottom sheet bar rating -->
+
+        <RelativeLayout
+            android:id="@+id/bottomSheetRating"
+            android:layout_width="match_parent"
+            android:padding="@dimen/_10sdp"
+            android:paddingTop="@dimen/_14sdp"
+            android:background="@drawable/bg_bottomsheet"
+            app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <com.google.android.material.bottomsheet.BottomSheetDragHandleView
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="center"
+                    app:tint="@color/primary"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/_7sdp"
+                    android:text="Tambahkan Pengaduan Baru"
+                    android:includeFontPadding="false"
+                    android:fontFamily="@font/popsem"
+                    android:layout_centerVertical="true"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_14ssp"/>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/til_nrp"
+                    android:layout_marginBottom="@dimen/_5sdp"
+                    android:textColor="@color/black"
+                    app:boxCornerRadiusBottomEnd="@dimen/_8sdp"
+                    app:boxCornerRadiusBottomStart="@dimen/_8sdp"
+                    app:cursorColor="@color/primary"
+
+                    app:boxCornerRadiusTopEnd="@dimen/_8sdp"
+                    app:boxCornerRadiusTopStart="@dimen/_8sdp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etIsiLaporan"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Isi laporan"
+                        android:fontFamily="@font/popmed"
+                        android:lines="4"
+                        android:gravity="start"
+
+                        android:textColorHint="@color/black"
+
+                        android:inputType="textMultiLine"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_12ssp"></com.google.android.material.textfield.TextInputEditText>
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:layout_height="wrap_content">
+                    <ProgressBar
+                        android:layout_width="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/progresBarStore"/>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:layout_width="match_parent"
+                        android:fontFamily="@font/popmed"
+                        android:textSize="@dimen/_12ssp"
+                        android:id="@+id/btnStoreCart"
+                        android:text="Simpan"
+                        android:layout_height="wrap_content"/>
+                </RelativeLayout>
+
+            </LinearLayout>
+        </RelativeLayout>
+
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>

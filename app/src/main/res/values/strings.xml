@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Wbs</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="desc_banner">
+        WBS  Biro Umum merupakan aplikasi berbasis mobile yang disediakan oleh Biro Umum Setda Jateng untuk melakukan pengaduan terkait pelanggaran ataupun masalah yang sedang Anda alami.
+    </string>
+
+    <string name="desc_home">
+        mekanisme penyampaian pengaduan dilakukan secara tertutup agar Anda dapat menanyakan lebih lanjut terkait aduan yang anda kirim. Sampaikan aduan Anda agar kami dapat meninjau ulang pelanggaran yang sedang terjadi atau menangani masalah yang sedang Anda alami.
+    </string>
+
+
+</resources>

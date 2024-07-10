@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "850286323485",
+    "firebase_url": "https://wbs-app-25b38-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "wbs-app-25b38",
+    "storage_bucket": "wbs-app-25b38.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:850286323485:android:e2dc6b0e83bb633a75e3f4",
+        "android_client_info": {
+          "package_name": "com.example.wbs"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCH5waVaJbzb3vF529T8U2Ns62MZelXpRU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

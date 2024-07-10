@@ -4,6 +4,7 @@ import com.example.wbs.core.models.ResponseApiModel;
 import com.example.wbs.core.models.UserModel;
 import com.example.wbs.features.kriteria.model.KriteriaModel;
 import com.example.wbs.features.pengaduan.model.PengaduanModel;
+import com.example.wbs.features.profile.models.UserModelProfile;
 
 import java.util.HashMap;
 import java.util.List;
@@ -72,6 +73,18 @@ public interface ApiService {
     @POST("admin/pengaduan/update")
     Call<ResponseApiModel> adminUpdateStatus(
             @FieldMap HashMap<String, Object> data);
+
+    @GET("user/profile")
+    Call<ResponseApiModel<UserModelProfile>> getProfile(
+            @QueryMap HashMap<String, Object> data
+    );
+
+    @FormUrlEncoded
+    @POST("user/profile/update")
+    Call<ResponseApiModel> updateProfile(
+            @FieldMap HashMap<String, Object> data);
+
+
 
 
 //

@@ -103,6 +103,14 @@ public interface ApiService {
             @Path("id") int petugasId
     );
 
+    @GET("admin/pengguna")
+    Call<ResponseApiModel<List<UserModelProfile>>> getPengguna();
+
+    @FormUrlEncoded
+    @POST("admin/pengguna/store")
+    Call<ResponseApiModel> storePengguna(
+            @FieldMap HashMap<String, Object> data
+    );
 
 
 

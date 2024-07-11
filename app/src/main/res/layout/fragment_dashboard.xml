@@ -106,7 +106,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Menu Utama"
+                            android:text="Menu Petugas"
                             android:textColor="@color/black"
                             android:layout_marginTop="@dimen/_20sdp"
                             android:fontFamily="@font/popsem"

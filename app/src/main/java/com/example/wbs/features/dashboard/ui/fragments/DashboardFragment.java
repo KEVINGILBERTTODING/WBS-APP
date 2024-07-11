@@ -14,6 +14,7 @@ import com.example.wbs.core.models.SharedUserModel;
 import com.example.wbs.core.services.UserService;
 import com.example.wbs.databinding.FragmentDashboardBinding;
 import com.example.wbs.features.auth.ui.activities.AuthActivity;
+import com.example.wbs.features.pengguna.ui.fragments.PenggunaFragment;
 import com.example.wbs.features.petugas.ui.fragments.PetugasFragment;
 
 
@@ -50,6 +51,7 @@ public class DashboardFragment extends Fragment {
         });
 
         binding.btnAdmin.setOnClickListener(v -> fragmentTransaction(new PetugasFragment()));
+        binding.btnPengguna.setOnClickListener(v -> fragmentTransaction(new PenggunaFragment()));
     }
 
     private void fragmentTransaction(Fragment fragment) {
@@ -72,6 +74,7 @@ public class DashboardFragment extends Fragment {
            if (!sharedUserModel.getRole().equals("pengguna")) {
                binding.lrMenu.setVisibility(View.VISIBLE);
            }
+
 
         }else {
             binding.btnLogin.setVisibility(View.VISIBLE);

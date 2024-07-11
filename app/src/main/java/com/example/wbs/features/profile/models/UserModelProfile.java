@@ -5,16 +5,41 @@ public class UserModelProfile {
     private int id_pengguna;
     private String nama;
     private String nama_petugas;
+    private int id_petugas;
+    private String nama_kriteria;
     private String email;
+    private String level;
     private String username;
     private String password;
     private String telp;
     private String gender;
     private String tgl_lahir;
     private String jabatan;
+    private int id_kriteria;
 
 
     public UserModelProfile() {
+    }
+
+    public int getId_petugas() {
+        return id_petugas;
+    }
+
+    public void setId_petugas(int id_petugas) {
+        this.id_petugas = id_petugas;
+    }
+
+
+    public int getId_kriteria() {
+        return id_kriteria;
+    }
+
+    public String getNama_kriteria() {
+        return nama_kriteria;
+    }
+
+    public void setNama_kriteria(String nama_kriteria) {
+        this.nama_kriteria = nama_kriteria;
     }
 
     public int getId_pengguna() {
@@ -35,6 +60,10 @@ public class UserModelProfile {
 
     public String getEmail() {
         return email;
+    }
+
+    public String getLevel() {
+        return level;
     }
 
     public void setEmail(String email) {

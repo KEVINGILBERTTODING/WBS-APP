@@ -8,6 +8,7 @@ public class Constants {
     public static final String SHARED_PREF_NAME = "pref_solution";
     public static final String KEY_PREF_USERNAME = "pref_username";
     public static final String KEY_PREF_NAMA_LENGKAP = "pref_nama_lengkap";
+    public static final String KEY_PREF_ID_KRITERIA = "pref_id_kriteria";
     public static final String KEY_PREF_EMAIL = "pref_email";
     public static final String KEY_PREF_USER_ID = "pref_uid";
     public static final String KEY_PREF_NIK = "pref_nik";

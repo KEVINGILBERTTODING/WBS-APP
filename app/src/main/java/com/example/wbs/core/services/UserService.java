@@ -20,6 +20,7 @@ public class UserService {
                 saveString(Constants.KEY_PREF_USERNAME, sharedUserModel.getUsername());
         saveString(Constants.KEY_PREF_ROLE, sharedUserModel.getRole());
                 saveString(Constants.KEY_PREF_NAMA_LENGKAP, sharedUserModel.getNama());
+                saveInt(Constants.KEY_PREF_ID_KRITERIA, sharedUserModel.getId_kriteria());
                 saveBool(Constants.KEY_PREF_IS_LOGIN, sharedUserModel.isLogin());
 
     }
@@ -30,6 +31,7 @@ public class UserService {
                 sharedPreferences.getString(Constants.KEY_PREF_USERNAME, ""),
                 sharedPreferences.getString(Constants.KEY_PREF_ROLE, ""),
                 sharedPreferences.getString(Constants.KEY_PREF_NAMA_LENGKAP, ""),
+                sharedPreferences.getInt(Constants.KEY_PREF_ID_KRITERIA, 0),
                 sharedPreferences.getBoolean(Constants.KEY_PREF_IS_LOGIN, false)
         );
 

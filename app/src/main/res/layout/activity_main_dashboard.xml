@@ -16,9 +16,13 @@
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:layout_width="match_parent"
         android:layout_alignParentBottom="true"
+        app:elevation="0dp"
         android:background="@color/white"
+        app:labelVisibilityMode="unlabeled"
+        app:itemActiveIndicatorStyle="@color/primary"
         app:menu="@menu/bottom_menu"
+        app:itemTextColor="@color/primary"
         android:id="@+id/bottomBar"
-        android:layout_height="wrap_content"/>
+        android:layout_height="@dimen/_40sdp"/>
 
 </RelativeLayout>

@@ -285,8 +285,6 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:hint="Password"
-                                    android:enabled="false"
-                                    android:focusable="false"
                                     android:fontFamily="@font/popmed"
 
                                     android:textColorHint="@color/black"
@@ -424,8 +422,6 @@
                                     android:id="@+id/etPasswordAdmin"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:enabled="false"
-                                    android:focusable="false"
                                     android:fontFamily="@font/popmed"
                                     android:hint="Password"
 

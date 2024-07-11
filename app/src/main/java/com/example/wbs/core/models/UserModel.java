@@ -17,6 +17,7 @@ public class UserModel implements Parcelable {
      private String nama_petugas;
      private String username;
      private String telp;
+     private int id_kriteria;
      private String nama;
      private int id;
 
@@ -110,6 +111,14 @@ public class UserModel implements Parcelable {
 
     public void setNama(String nama) {
         this.nama = nama;
+    }
+
+    public int getId_kriteria() {
+        return id_kriteria;
+    }
+
+    public void setId_kriteria(int id_kriteria) {
+        this.id_kriteria = id_kriteria;
     }
 
     @Override

@@ -105,6 +105,7 @@ public class LoginFragment extends Fragment {
                 data.getUsername(),
                 data.getRole(),
                 data.getNama(),
+                data.getId_kriteria(),
                 true
         );
         userService.saveUser(sharedUserModel);

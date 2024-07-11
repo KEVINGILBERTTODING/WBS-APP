@@ -38,8 +38,7 @@ public interface ApiService {
 
     @GET("user/pengaduan")
     Call<ResponseApiModel<List<PengaduanModel>>> getPengaduanUser(
-            @Query("user_id") String userId,
-            @Query("role") String role
+          @QueryMap  HashMap<String, Object> data
     );
 
     @Multipart
@@ -83,6 +82,26 @@ public interface ApiService {
     @POST("user/profile/update")
     Call<ResponseApiModel> updateProfile(
             @FieldMap HashMap<String, Object> data);
+
+    @GET("admin/petugas")
+    Call<ResponseApiModel<List<UserModelProfile>>> getPetugas();
+
+    @FormUrlEncoded
+    @POST("admin/petugas/store")
+    Call<ResponseApiModel> storePetugas(
+            @FieldMap HashMap<String, Object> data
+    );
+
+    @FormUrlEncoded
+    @POST("admin/petugas/update")
+    Call<ResponseApiModel> updatePetugas(
+            @FieldMap HashMap<String, Object> data
+    );
+
+    @DELETE("admin/petugas/destroy/{id}")
+    Call<ResponseApiModel> destrotPetugas(
+            @Path("id") int petugasId
+    );
 
 
 

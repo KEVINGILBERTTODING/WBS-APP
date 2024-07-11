@@ -31,9 +31,9 @@ public class PengaduanRepository {
     public PengaduanRepository(ApiService apiService) {
         this.apiService = apiService;
     }
-    public LiveData<ResponseApiModel<List<PengaduanModel>>> getPengaduanUser(String id, String role) {
+    public LiveData<ResponseApiModel<List<PengaduanModel>>> getPengaduanUser(HashMap<String, Object> data) {
         MutableLiveData<ResponseApiModel<List<PengaduanModel>>> responseApiModelMutableLiveData = new MutableLiveData<>();
-        apiService.getPengaduanUser(id, role).enqueue(new Callback<ResponseApiModel<List<PengaduanModel>>>() {
+        apiService.getPengaduanUser(data).enqueue(new Callback<ResponseApiModel<List<PengaduanModel>>>() {
             @Override
             public void onResponse(Call<ResponseApiModel<List<PengaduanModel>>> call, Response<ResponseApiModel<List<PengaduanModel>>> response) {
                 if (response.isSuccessful() && response.body() != null && response.body().getData() != null) {

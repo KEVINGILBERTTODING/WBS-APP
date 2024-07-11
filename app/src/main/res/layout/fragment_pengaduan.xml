@@ -165,7 +165,7 @@
                     android:fontFamily="@font/popsem"
                     android:layout_centerVertical="true"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/_14ssp"/>
+                    android:textSize="@dimen/_12ssp"/>
 
                 <com.chivorn.smartmaterialspinner.SmartMaterialSpinner
                     app:smsp_outlinedBoxColor="@color/black"

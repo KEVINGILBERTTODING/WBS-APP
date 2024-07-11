@@ -5,13 +5,15 @@ public class SharedUserModel {
     private String username;
     private String role;
     private String nama;
+    private int id_kriteria;
     private boolean isLogin;
 
-    public SharedUserModel(int user_id, String username, String role, String nama, boolean isLogin) {
+    public SharedUserModel(int user_id, String username, String role, String nama, int id_kriteria, boolean isLogin) {
         this.user_id = user_id;
         this.username = username;
         this.role = role;
         this.nama = nama;
+        this.id_kriteria = id_kriteria;
         this.isLogin = isLogin;
     }
 
@@ -54,5 +56,13 @@ public class SharedUserModel {
 
     public void setLogin(boolean login) {
         isLogin = login;
+    }
+
+    public int getId_kriteria() {
+        return id_kriteria;
+    }
+
+    public void setId_kriteria(int id_kriteria) {
+        this.id_kriteria = id_kriteria;
     }
 }

@@ -95,7 +95,11 @@ public class PengaduanFragment extends Fragment implements OnClickListener {
         binding.lrAccessDenied.setVisibility(View.GONE);
         binding.rv.setVisibility(View.GONE);
         binding.pb.setVisibility(View.VISIBLE);
-        pengaduanViewModel.getPengaduanUser(String.valueOf(sharedUserModel.getUser_id()), sharedUserModel.getRole())
+        HashMap<String, Object> data = new HashMap<>();
+        data.put("user_id", sharedUserModel.getUser_id());
+        data.put("role", sharedUserModel.getRole());
+        data.put("kriteria_id", sharedUserModel.getId_kriteria());
+        pengaduanViewModel.getPengaduanUser(data)
                 .observe(getViewLifecycleOwner(), new Observer<ResponseApiModel<List<PengaduanModel>>>() {
                     @Override
                     public void onChanged(ResponseApiModel<List<PengaduanModel>> listResponseApiModel) {

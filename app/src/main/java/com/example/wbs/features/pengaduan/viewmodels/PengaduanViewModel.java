@@ -30,8 +30,8 @@ public class PengaduanViewModel extends ViewModel {
 
 
 
-   public LiveData<ResponseApiModel<List<PengaduanModel>>> getPengaduanUser(String id, String role) {
-        return pengaduanRepository.getPengaduanUser(id, role);
+   public LiveData<ResponseApiModel<List<PengaduanModel>>> getPengaduanUser(HashMap<String, Object> data) {
+        return pengaduanRepository.getPengaduanUser(data);
    }
 
    public LiveData<ResponseApiModel> storePengaduan(Map<String, RequestBody> map, MultipartBody.Part file, boolean isWithImage) {

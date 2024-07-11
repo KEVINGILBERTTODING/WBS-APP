@@ -1,0 +1,397 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:background="@color/white"
+        android:layout_height="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        tools:context=".features.petugas.ui.fragments.PetugasFragment">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_margin="@dimen/_10sdp"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Daftar Petugas"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/popsem"
+                    android:textSize="@dimen/_12ssp"/>
+
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:id="@+id/rv"
+                    tools:listitem="@layout/item_petugas"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:layout_centerInParent="true"
+                android:id="@+id/lrAccessDenied"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:textColor="@color/primary"
+                    android:layout_gravity="center"
+                    android:textSize="@dimen/_14ssp"
+                    android:fontFamily="@font/popsem"
+                    android:layout_height="wrap_content"
+                    android:text="Akses Ditolak!"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_10ssp"
+                    android:fontFamily="@font/popmed"
+                    android:layout_gravity="center"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:text="Untuk mengakses fitur ini anda harus login terlebih dahulu."/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:id="@+id/btnLogin"
+                    android:layout_height="wrap_content"
+                    android:text="Login"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:id="@+id/lrEmpty"
+                android:visibility="gone"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:textColor="@color/primary"
+                    android:layout_gravity="center"
+                    android:textSize="@dimen/_14ssp"
+                    android:fontFamily="@font/popsem"
+                    android:layout_height="wrap_content"
+                    android:text="Tidak ada aduan!"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_10ssp"
+                    android:fontFamily="@font/popmed"
+                    android:layout_gravity="center"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:text="Riwayat aduan anda akan muncul di sini."/>
+
+
+            </LinearLayout>
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:layout_width="wrap_content"
+                app:backgroundTint="@color/primary"
+                android:layout_margin="@dimen/_5sdp"
+                android:src="@drawable/baseline_add_24"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                app:tint="@color/white"
+                android:id="@+id/fabAdd"
+                android:layout_height="wrap_content"/>
+
+
+
+        </RelativeLayout>
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+
+            android:layout_gravity="center"
+            android:id="@+id/pb"
+            android:layout_marginTop="@dimen/_10sdp"/>
+
+
+
+
+        <View
+            android:layout_width="match_parent"
+            android:background="@color/overlay"
+            android:id="@+id/vOverlay"
+            android:visibility="gone"
+            android:layout_height="match_parent"/>
+
+
+        <!--        Bottom sheet bar rating -->
+
+        <RelativeLayout
+            android:id="@+id/bottomSheetRating"
+            android:layout_width="match_parent"
+            android:padding="@dimen/_10sdp"
+            android:paddingTop="@dimen/_14sdp"
+            android:background="@drawable/bg_bottomsheet"
+            app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <com.google.android.material.bottomsheet.BottomSheetDragHandleView
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="center"
+                    app:tint="@color/primary"
+                    android:layout_height="wrap_content"/>
+
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/_7sdp"
+                    android:id="@+id/tvState"
+                    android:text="Tambahkan Petugas Baru"
+                    android:includeFontPadding="false"
+                    android:fontFamily="@font/popsem"
+                    android:layout_centerVertical="true"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_12ssp"/>
+
+               <androidx.core.widget.NestedScrollView
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content">
+                   <LinearLayout
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:orientation="vertical">
+                       <com.chivorn.smartmaterialspinner.SmartMaterialSpinner
+                           app:smsp_outlinedBoxColor="@color/black"
+                           android:id="@+id/spinnerKriteria"
+                           android:layout_marginTop="@dimen/_10sdp"
+
+                           android:layout_width="match_parent"
+                           app:smsp_hint="Kriteria"
+                           android:layout_height="wrap_content"
+                           app:smsp_itemSize="@dimen/_12ssp"
+                           app:smsp_autoSelectable="true"
+                           app:smsp_baseColor="@color/primary"
+                           app:smsp_hintColor="@color/primary"
+                           app:smsp_selectedItemListColor="@color/primary"
+                           app:smsp_itemListBackgroundColor="@color/white"
+
+                           app:smsp_isOutlined="true"
+                           app:smsp_floatingLabelText="Role"
+                           app:smsp_alwaysShowFloatingLabel="true"
+                           app:smsp_enableFloatingLabel="true"
+                           app:smsp_multilineError="false" />
+                       <com.google.android.material.textfield.TextInputLayout
+                           android:id="@+id/til_name_admin"
+                           android:layout_width="match_parent"
+                           android:layout_height="wrap_content"
+                           android:layout_row="2"
+
+                           android:layout_column="0"
+                           android:layout_columnWeight="1"
+                           android:layout_marginTop="@dimen/_10sdp"
+                           android:layout_marginBottom="@dimen/_5sdp"
+                           android:textColor="@color/black"
+                           app:boxCornerRadiusBottomEnd="@dimen/_8sdp"
+                           app:boxCornerRadiusBottomStart="@dimen/_8sdp"
+                           app:boxCornerRadiusTopEnd="@dimen/_8sdp"
+
+                           app:boxCornerRadiusTopStart="@dimen/_8sdp"
+                           app:cursorColor="@color/primary">
+
+                           <com.google.android.material.textfield.TextInputEditText
+                               android:id="@+id/etNameAdmin"
+                               android:layout_width="match_parent"
+                               android:layout_height="wrap_content"
+                               android:fontFamily="@font/popmed"
+                               android:hint="Nama Lengkap"
+
+                               android:inputType="textPersonName"
+
+                               android:textColor="@color/black"
+                               android:textColorHint="@color/black"
+                               android:textSize="@dimen/_12ssp"></com.google.android.material.textfield.TextInputEditText>
+                       </com.google.android.material.textfield.TextInputLayout>
+
+                       <com.google.android.material.textfield.TextInputLayout
+                           android:id="@+id/til_username_admin"
+                           android:layout_width="match_parent"
+                           android:layout_height="wrap_content"
+                           android:layout_row="2"
+
+                           android:layout_column="0"
+                           android:layout_columnWeight="1"
+                           android:layout_marginTop="@dimen/_10sdp"
+                           android:layout_marginBottom="@dimen/_5sdp"
+                           android:textColor="@color/black"
+                           app:boxCornerRadiusBottomEnd="@dimen/_8sdp"
+                           app:boxCornerRadiusBottomStart="@dimen/_8sdp"
+                           app:boxCornerRadiusTopEnd="@dimen/_8sdp"
+
+                           app:boxCornerRadiusTopStart="@dimen/_8sdp"
+                           app:cursorColor="@color/primary">
+
+                           <com.google.android.material.textfield.TextInputEditText
+                               android:id="@+id/etUsernameAdmin"
+                               android:layout_width="match_parent"
+                               android:layout_height="wrap_content"
+                               android:fontFamily="@font/popmed"
+                               android:hint="Username"
+
+                               android:inputType="textPersonName"
+
+                               android:textColor="@color/black"
+                               android:textColorHint="@color/black"
+                               android:textSize="@dimen/_12ssp"></com.google.android.material.textfield.TextInputEditText>
+                       </com.google.android.material.textfield.TextInputLayout>
+
+                       <com.chivorn.smartmaterialspinner.SmartMaterialSpinner
+                           app:smsp_outlinedBoxColor="@color/black"
+                           android:id="@+id/spinnerLevel"
+                           android:layout_marginTop="@dimen/_10sdp"
+
+                           android:layout_width="match_parent"
+                           app:smsp_hint="Level"
+                           android:layout_height="wrap_content"
+                           app:smsp_itemSize="@dimen/_12ssp"
+                           app:smsp_autoSelectable="true"
+                           app:smsp_baseColor="@color/primary"
+                           app:smsp_hintColor="@color/primary"
+                           app:smsp_selectedItemListColor="@color/primary"
+                           app:smsp_itemListBackgroundColor="@color/white"
+
+                           app:smsp_isOutlined="true"
+                           app:smsp_floatingLabelText="Role"
+                           app:smsp_alwaysShowFloatingLabel="true"
+                           app:smsp_enableFloatingLabel="true"
+                           app:smsp_multilineError="false" />
+                       <com.google.android.material.textfield.TextInputLayout
+                           android:id="@+id/til_phone_admin"
+                           android:layout_width="match_parent"
+                           android:layout_height="wrap_content"
+                           android:layout_row="1"
+                           android:layout_column="1"
+                           android:layout_columnWeight="1"
+                           android:layout_marginTop="@dimen/_10sdp"
+                           android:layout_marginBottom="@dimen/_5sdp"
+                           android:textColor="@color/black"
+                           app:boxCornerRadiusBottomEnd="@dimen/_8sdp"
+                           app:boxCornerRadiusBottomStart="@dimen/_8sdp"
+                           app:boxCornerRadiusTopEnd="@dimen/_8sdp"
+
+                           app:boxCornerRadiusTopStart="@dimen/_8sdp"
+                           app:cursorColor="@color/primary">
+
+                           <com.google.android.material.textfield.TextInputEditText
+                               android:id="@+id/etPhoneAdmin"
+                               android:layout_width="match_parent"
+                               android:layout_height="wrap_content"
+                               android:fontFamily="@font/popmed"
+                               android:hint="No Handphone"
+
+                               android:inputType="number"
+
+                               android:textColor="@color/black"
+                               android:textColorHint="@color/black"
+                               android:textSize="@dimen/_12ssp"></com.google.android.material.textfield.TextInputEditText>
+                       </com.google.android.material.textfield.TextInputLayout>
+
+                       <com.google.android.material.textfield.TextInputLayout
+                           android:id="@+id/til_passwordAdmin"
+                           android:layout_width="match_parent"
+                           android:layout_height="wrap_content"
+                           android:layout_row="4"
+                           android:layout_column="1"
+                           android:layout_columnWeight="1"
+                           android:layout_marginTop="@dimen/_10sdp"
+                           android:layout_marginBottom="@dimen/_5sdp"
+                           android:textColor="@color/black"
+                           app:boxCornerRadiusBottomEnd="@dimen/_8sdp"
+                           app:boxCornerRadiusBottomStart="@dimen/_8sdp"
+                           app:boxCornerRadiusTopEnd="@dimen/_8sdp"
+                           app:boxCornerRadiusTopStart="@dimen/_8sdp"
+
+                           app:cursorColor="@color/primary"
+                           app:passwordToggleEnabled="true">
+
+                           <com.google.android.material.textfield.TextInputEditText
+                               android:id="@+id/etPasswordAdmin"
+                               android:layout_width="match_parent"
+                               android:layout_height="wrap_content"
+                               android:fontFamily="@font/popmed"
+                               android:hint="Password"
+
+                               android:inputType="textPassword"
+
+                               android:textColor="@color/black"
+                               android:textColorHint="@color/black"
+                               android:textSize="@dimen/_12ssp"></com.google.android.material.textfield.TextInputEditText>
+                       </com.google.android.material.textfield.TextInputLayout>
+
+
+                       <RelativeLayout
+                           android:layout_width="match_parent"
+                           android:layout_marginTop="@dimen/_20sdp"
+                           android:layout_height="wrap_content">
+                           <ProgressBar
+                               android:layout_width="wrap_content"
+                               android:layout_centerHorizontal="true"
+                               android:layout_height="wrap_content"
+                               android:id="@+id/progresBarStore"/>
+
+                           <com.google.android.material.button.MaterialButton
+                               android:layout_width="match_parent"
+                               android:fontFamily="@font/popmed"
+                               android:textSize="@dimen/_12ssp"
+                               android:id="@+id/btnStoreCart"
+                               android:text="Simpan"
+                               android:layout_height="wrap_content"/>
+                       </RelativeLayout>
+
+                       <RelativeLayout
+                           android:layout_width="match_parent"
+                           android:id="@+id/rlDestroy"
+                           android:layout_marginTop="@dimen/_10sdp"
+                           android:visibility="gone"
+                           android:layout_height="wrap_content">
+                           <ProgressBar
+                               android:layout_width="wrap_content"
+                               android:layout_centerHorizontal="true"
+                               android:layout_height="wrap_content"
+                               android:id="@+id/progresBarDestroy"/>
+
+                           <com.google.android.material.button.MaterialButton
+                               android:layout_width="match_parent"
+                               android:fontFamily="@font/popmed"
+                               android:textSize="@dimen/_12ssp"
+                               android:id="@+id/btnDestroy"
+
+                               android:text="Hapus"
+                               app:backgroundTint="@color/red"
+
+                               android:layout_height="wrap_content"/>
+                       </RelativeLayout>
+
+                   </LinearLayout>
+               </androidx.core.widget.NestedScrollView>
+            </LinearLayout>
+        </RelativeLayout>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>

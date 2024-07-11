@@ -5,6 +5,7 @@ import android.util.Log;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.wbs.core.models.ResponseApiDownloadModel;
 import com.example.wbs.core.models.ResponseApiModel;
 import com.example.wbs.core.models.UserModel;
 import com.example.wbs.core.services.ApiService;
@@ -20,6 +21,7 @@ import javax.inject.Inject;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -127,6 +129,60 @@ public class PengaduanRepository {
             public void onFailure(Call<ResponseApiModel> call, Throwable t) {
                 Log.d("TAG", "onFailure: " + t.getMessage());
                 responseApiModelMutableLiveData.postValue(new ResponseApiModel<>(false, Constants.SERVER_ERROR, null));
+
+            }
+        });
+        return responseApiModelMutableLiveData;
+    }
+
+    public LiveData<ResponseApiModel<List<PengaduanModel>>> filterPengaduan(HashMap<String, Object> data) {
+        MutableLiveData<ResponseApiModel<List<PengaduanModel>>> responseApiModelMutableLiveData = new MutableLiveData<>();
+        apiService.filterPengaduan(data).enqueue(new Callback<ResponseApiModel<List<PengaduanModel>>>() {
+            @Override
+            public void onResponse(Call<ResponseApiModel<List<PengaduanModel>>> call, Response<ResponseApiModel<List<PengaduanModel>>> response) {
+                if (response.isSuccessful() && response.body() != null && response.body().getData() != null) {
+                    responseApiModelMutableLiveData.postValue(new ResponseApiModel<>(true, Constants.SUCCESS, response.body().getData()));
+
+                }else  {
+                    Gson gson = new Gson();
+                    ResponseApiModel responseApiModel = gson.fromJson(response.errorBody().charStream(), ResponseApiModel.class);
+                    responseApiModelMutableLiveData.postValue(new ResponseApiModel<>(false, responseApiModel.getMessage(), null));
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseApiModel<List<PengaduanModel>>> call, Throwable t) {
+                Log.d("TAG", "onFailure: " + t.getMessage());
+                responseApiModelMutableLiveData.postValue(new ResponseApiModel<>(false, Constants.SERVER_ERROR, null));
+
+            }
+        });
+        return responseApiModelMutableLiveData;
+    }
+
+    public LiveData<ResponseApiDownloadModel> downloadPengaduan(HashMap<String, Object> data) {
+        MutableLiveData<ResponseApiDownloadModel> responseApiModelMutableLiveData = new MutableLiveData<>();
+        apiService.downloadPengaduan(data).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful() && response.body() != null && response.body() != null) {
+                    responseApiModelMutableLiveData.postValue(new ResponseApiDownloadModel(Constants.SUCCESS, Constants.SUCCESS, response.body()));
+
+                }else  {
+                    Gson gson = new Gson();
+                    ResponseApiDownloadModel responseApiModel = gson.fromJson(response.errorBody().charStream(), ResponseApiDownloadModel.class);
+                    responseApiModelMutableLiveData.postValue(new ResponseApiDownloadModel(Constants.SOMETHING_WENT_WRONG, Constants.SOMETHING_WENT_WRONG, null));
+
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.d("TAG", "onFailure: " + t.getMessage());
+                responseApiModelMutableLiveData.postValue(new ResponseApiDownloadModel(Constants.SOMETHING_WENT_WRONG, Constants.SOMETHING_WENT_WRONG, null));
+
 
             }
         });

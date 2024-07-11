@@ -26,6 +26,93 @@
                     android:fontFamily="@font/popsem"
                     android:textSize="@dimen/_12ssp"/>
 
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_gravity="end"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/lrMenu">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_marginRight="@dimen/_10sdp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                     <RelativeLayout
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content">
+
+                         <ProgressBar
+                             android:layout_width="@dimen/_25sdp"
+                             android:layout_height="@dimen/_25sdp"
+                             android:visibility="gone"
+                             android:id="@+id/progressBarDownload"/>
+                         <androidx.cardview.widget.CardView
+                             android:layout_width="wrap_content"
+                             app:contentPadding="@dimen/_5sdp"
+                             android:layout_height="wrap_content"
+                             app:cardElevation="0dp"
+                             android:id="@+id/cvDownload"
+                             android:layout_gravity="center"
+                             app:cardCornerRadius="@dimen/_8sdp"
+                             app:cardBackgroundColor="@color/green">
+
+                             <ImageButton
+                                 android:layout_width="@dimen/_18sdp"
+                                 android:id="@+id/btnDownload"
+                                 android:layout_height="@dimen/_18sdp"
+                                 android:backgroundTint="@color/white"
+                                 android:background="@drawable/ic_download"/>
+
+
+                         </androidx.cardview.widget.CardView>
+                     </RelativeLayout>
+
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="wrap_content"
+                            app:contentPadding="@dimen/_5sdp"
+                            android:layout_height="wrap_content"
+                            app:cardElevation="0dp"
+                            android:layout_gravity="center"
+                            app:cardCornerRadius="@dimen/_8sdp"
+                            app:cardBackgroundColor="@color/yellow">
+
+                            <ImageButton
+                                android:layout_width="@dimen/_18sdp"
+                                android:id="@+id/btnFilter"
+                                android:backgroundTint="@color/white"
+                                android:layout_height="@dimen/_18sdp"
+                                android:background="@drawable/ic_filter"/>
+
+
+                        </androidx.cardview.widget.CardView>
+
+
+
+
+                    </LinearLayout>
+
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
 
                 <ProgressBar
                     android:layout_width="wrap_content"
@@ -146,6 +233,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:id="@+id/lrStore"
+                android:visibility="gone"
                 android:orientation="vertical">
                 <com.google.android.material.bottomsheet.BottomSheetDragHandleView
                     android:layout_width="wrap_content"
@@ -153,102 +242,234 @@
                     app:tint="@color/primary"
                     android:layout_height="wrap_content"/>
 
-
-
-                <TextView
-                    android:layout_width="wrap_content"
-
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/_7sdp"
-                    android:text="Tambahkan Pengaduan Baru"
-                    android:includeFontPadding="false"
-                    android:fontFamily="@font/popsem"
-                    android:layout_centerVertical="true"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_12ssp"/>
-
-                <com.chivorn.smartmaterialspinner.SmartMaterialSpinner
-                    app:smsp_outlinedBoxColor="@color/black"
-                    android:id="@+id/spinnerKriteria"
-                    android:layout_marginTop="@dimen/_10sdp"
-
-                    android:layout_width="match_parent"
-                    app:smsp_hint="Kriteria"
-                    android:layout_height="wrap_content"
-                    app:smsp_itemSize="@dimen/_12ssp"
-                    app:smsp_autoSelectable="true"
-                    app:smsp_baseColor="@color/primary"
-                    app:smsp_hintColor="@color/primary"
-                    app:smsp_selectedItemListColor="@color/primary"
-                    app:smsp_itemListBackgroundColor="@color/white"
-
-                    app:smsp_isOutlined="true"
-                    app:smsp_floatingLabelText="Role"
-                    app:smsp_alwaysShowFloatingLabel="true"
-                    app:smsp_enableFloatingLabel="true"
-                    app:smsp_multilineError="false" />
-                <com.google.android.material.textfield.TextInputLayout
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/til_nrp"
-                    android:layout_marginBottom="@dimen/_5sdp"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:textColor="@color/black"
-                    app:boxCornerRadiusBottomEnd="@dimen/_8sdp"
-                    app:boxCornerRadiusBottomStart="@dimen/_8sdp"
-                    app:cursorColor="@color/primary"
+                    android:orientation="vertical">
 
-                    app:boxCornerRadiusTopEnd="@dimen/_8sdp"
-                    app:boxCornerRadiusTopStart="@dimen/_8sdp">
+                    <TextView
+                        android:layout_width="wrap_content"
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/etIsiLaporan"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/_7sdp"
+                        android:text="Tambahkan Pengaduan Baru"
+                        android:includeFontPadding="false"
+                        android:fontFamily="@font/popsem"
+                        android:layout_centerVertical="true"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_12ssp"/>
+
+                    <com.chivorn.smartmaterialspinner.SmartMaterialSpinner
+                        app:smsp_outlinedBoxColor="@color/black"
+                        android:id="@+id/spinnerKriteria"
+                        android:layout_marginTop="@dimen/_10sdp"
+
+                        android:layout_width="match_parent"
+                        app:smsp_hint="Kriteria"
+                        android:layout_height="wrap_content"
+                        app:smsp_itemSize="@dimen/_12ssp"
+                        app:smsp_autoSelectable="true"
+                        app:smsp_baseColor="@color/primary"
+                        app:smsp_hintColor="@color/primary"
+                        app:smsp_selectedItemListColor="@color/primary"
+                        app:smsp_itemListBackgroundColor="@color/white"
+
+                        app:smsp_isOutlined="true"
+                        app:smsp_floatingLabelText="Role"
+                        app:smsp_alwaysShowFloatingLabel="true"
+                        app:smsp_enableFloatingLabel="true"
+                        app:smsp_multilineError="false" />
+                    <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Isi laporan"
-                        android:fontFamily="@font/popmed"
-                        android:lines="4"
-                        android:gravity="start"
-
-                        android:textColorHint="@color/black"
-
-                        android:inputType="textMultiLine"
+                        android:id="@+id/til_nrp"
+                        android:layout_marginBottom="@dimen/_5sdp"
+                        android:layout_marginTop="@dimen/_10sdp"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/_12ssp"></com.google.android.material.textfield.TextInputEditText>
-                </com.google.android.material.textfield.TextInputLayout>
+                        app:boxCornerRadiusBottomEnd="@dimen/_8sdp"
+                        app:boxCornerRadiusBottomStart="@dimen/_8sdp"
+                        app:cursorColor="@color/primary"
 
-                <ImageView
-                    android:layout_width="@dimen/_70sdp"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:visibility="gone"
-                    android:id="@+id/ivGambar"
-                    android:layout_height="@dimen/_70sdp"/>
+                        app:boxCornerRadiusTopEnd="@dimen/_8sdp"
+                        app:boxCornerRadiusTopStart="@dimen/_8sdp">
 
-                <com.google.android.material.button.MaterialButton
-                    android:layout_width="wrap_content"
-                    android:id="@+id/btnImagePicker"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_5sdp"
-                    android:text="Pilih Gambar"/>
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etIsiLaporan"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Isi laporan"
+                            android:fontFamily="@font/popmed"
+                            android:lines="4"
+                            android:gravity="start"
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_marginTop="@dimen/_20sdp"
-                    android:layout_height="wrap_content">
-                    <ProgressBar
-                        android:layout_width="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/progresBarStore"/>
+                            android:textColorHint="@color/black"
+
+                            android:inputType="textMultiLine"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/_12ssp"></com.google.android.material.textfield.TextInputEditText>
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <ImageView
+                        android:layout_width="@dimen/_70sdp"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:visibility="gone"
+                        android:id="@+id/ivGambar"
+                        android:layout_height="@dimen/_70sdp"/>
 
                     <com.google.android.material.button.MaterialButton
+                        android:layout_width="wrap_content"
+                        android:id="@+id/btnImagePicker"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:text="Pilih Gambar"/>
+
+                    <RelativeLayout
                         android:layout_width="match_parent"
-                        android:fontFamily="@font/popmed"
-                        android:textSize="@dimen/_12ssp"
-                        android:id="@+id/btnStoreCart"
-                        android:text="Simpan"
-                        android:layout_height="wrap_content"/>
-                </RelativeLayout>
+                        android:layout_marginTop="@dimen/_20sdp"
+                        android:layout_height="wrap_content">
+                        <ProgressBar
+                            android:layout_width="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/progresBarStore"/>
+
+                        <com.google.android.material.button.MaterialButton
+                            android:layout_width="match_parent"
+                            android:fontFamily="@font/popmed"
+                            android:textSize="@dimen/_12ssp"
+                            android:id="@+id/btnStoreCart"
+                            android:text="Simpan"
+                            android:layout_height="wrap_content"/>
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/lrFilter"
+                android:visibility="gone"
+                android:orientation="vertical">
+                <com.google.android.material.bottomsheet.BottomSheetDragHandleView
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="center"
+                    app:tint="@color/primary"
+                    android:layout_height="wrap_content"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/_7sdp"
+                        android:text="Filter Pengaduan"
+                        android:includeFontPadding="false"
+                        android:fontFamily="@font/popsem"
+                        android:layout_centerVertical="true"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_12ssp"/>
+
+                    <GridLayout
+                        android:layout_width="match_parent"
+                        android:rowCount="4"
+                        android:columnCount="1"
+                        android:layout_height="wrap_content">
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/til_date_from"
+                            android:layout_columnWeight="1"
+                            android:layout_column="0"
+                            android:layout_row="1"
+                            android:layout_marginBottom="@dimen/_5sdp"
+                            android:textColor="@color/black"
+                            app:boxCornerRadiusBottomEnd="@dimen/_8sdp"
+                            app:boxCornerRadiusBottomStart="@dimen/_8sdp"
+                            app:cursorColor="@color/primary"
+
+                            app:boxCornerRadiusTopEnd="@dimen/_8sdp"
+                            app:boxCornerRadiusTopStart="@dimen/_8sdp">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etDateFrom"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="Tanggal mulai"
+                                android:enabled="true"
+                                android:focusable="false"
+                                android:fontFamily="@font/popmed"
+
+                                android:textColorHint="@color/black"
+
+                                android:inputType="textPersonName"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/_12ssp"></com.google.android.material.textfield.TextInputEditText>
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/til_date_end"
+                            android:layout_columnWeight="1"
+                            android:layout_row="1"
+                            android:layout_marginBottom="@dimen/_5sdp"
+                            android:textColor="@color/black"
+                            app:boxCornerRadiusBottomEnd="@dimen/_8sdp"
+                            app:boxCornerRadiusBottomStart="@dimen/_8sdp"
+                            app:cursorColor="@color/primary"
+
+                            app:boxCornerRadiusTopEnd="@dimen/_8sdp"
+                            app:boxCornerRadiusTopStart="@dimen/_8sdp">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etDateEnd"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="Tanggal akhir"
+                                android:enabled="true"
+                                android:focusable="false"
+                                android:fontFamily="@font/popmed"
+
+                                android:textColorHint="@color/black"
+
+                                android:inputType="textPersonName"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/_12ssp"></com.google.android.material.textfield.TextInputEditText>
+                        </com.google.android.material.textfield.TextInputLayout>
+                    </GridLayout>
+
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_marginTop="@dimen/_20sdp"
+                        android:layout_height="wrap_content">
+                        <ProgressBar
+                            android:layout_width="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/progresBarFilter"/>
+
+                        <com.google.android.material.button.MaterialButton
+                            android:layout_width="match_parent"
+                            android:fontFamily="@font/popmed"
+                            android:textSize="@dimen/_12ssp"
+                            android:id="@+id/btnFilterSubmit"
+                            android:text="Filter"
+                            android:layout_height="wrap_content"/>
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+
+
+
 
             </LinearLayout>
         </RelativeLayout>

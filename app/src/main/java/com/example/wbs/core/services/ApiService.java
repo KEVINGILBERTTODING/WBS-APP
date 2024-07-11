@@ -12,6 +12,7 @@ import java.util.Map;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.DELETE;
 import retrofit2.http.FieldMap;
@@ -110,6 +111,16 @@ public interface ApiService {
     @POST("admin/pengguna/store")
     Call<ResponseApiModel> storePengguna(
             @FieldMap HashMap<String, Object> data
+    );
+
+    @GET("admin/pengaduan/filter")
+    Call<ResponseApiModel<List<PengaduanModel>>> filterPengaduan(
+            @QueryMap  HashMap<String, Object> data
+    );
+
+    @GET("admin/pengaduan/download")
+    Call<ResponseBody> downloadPengaduan(
+            @QueryMap  HashMap<String, Object> data
     );
 
 

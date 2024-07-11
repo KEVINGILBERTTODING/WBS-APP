@@ -1,6 +1,8 @@
 package com.example.wbs.features.pengaduan.ui.fragments;
 
 import android.Manifest;
+import android.app.DatePickerDialog;
+import android.content.ActivityNotFoundException;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -14,20 +16,25 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.wbs.R;
+import com.example.wbs.core.models.ResponseApiDownloadModel;
 import com.example.wbs.core.models.ResponseApiModel;
 import com.example.wbs.core.models.SharedUserModel;
 import com.example.wbs.core.services.UserService;
@@ -45,6 +52,8 @@ import com.example.wbs.utils.listener.OnClickListener;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
@@ -55,6 +64,7 @@ import dagger.hilt.android.AndroidEntryPoint;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 
 @AndroidEntryPoint
 public class PengaduanFragment extends Fragment implements OnClickListener {
@@ -66,6 +76,7 @@ public class PengaduanFragment extends Fragment implements OnClickListener {
     private PengaduanAdapter pengaduanAdapter;
     private BottomSheetBehavior bottomSheetStore;
     private int kriteriaSelected =  0;
+    private String dateFromState, dateEndState;
     private Uri fileUri;
 
 
@@ -94,6 +105,7 @@ public class PengaduanFragment extends Fragment implements OnClickListener {
         binding.lrEmpty.setVisibility(View.GONE);
         binding.lrAccessDenied.setVisibility(View.GONE);
         binding.rv.setVisibility(View.GONE);
+        binding.cvDownload.setVisibility(View.GONE);
         binding.pb.setVisibility(View.VISIBLE);
         HashMap<String, Object> data = new HashMap<>();
         data.put("user_id", sharedUserModel.getUser_id());
@@ -121,6 +133,47 @@ public class PengaduanFragment extends Fragment implements OnClickListener {
                 });
     }
 
+
+    private void filterData(HashMap<String, Object> data){
+        binding.rv.setAdapter(null);
+        binding.progresBarFilter.setVisibility(View.VISIBLE);
+        binding.btnFilterSubmit.setVisibility(View.GONE);
+        binding.lrEmpty.setVisibility(View.GONE);
+        binding.lrAccessDenied.setVisibility(View.GONE);
+        binding.cvDownload.setVisibility(View.GONE);
+        binding.rv.setVisibility(View.GONE);
+        binding.pb.setVisibility(View.VISIBLE);
+
+        pengaduanViewModel.filterPengaduan(data)
+                .observe(getViewLifecycleOwner(), new Observer<ResponseApiModel<List<PengaduanModel>>>() {
+                    @Override
+                    public void onChanged(ResponseApiModel<List<PengaduanModel>> listResponseApiModel) {
+                        binding.rv.setVisibility(View.VISIBLE);
+                        binding.pb.setVisibility(View.GONE);
+                        binding.progresBarFilter.setVisibility(View.GONE);
+                        binding.btnFilterSubmit.setVisibility(View.VISIBLE);
+                        if (listResponseApiModel.getStatus() && listResponseApiModel.getData() != null
+                        && listResponseApiModel.getData().size() > 0) {
+                            pengaduanAdapter = new PengaduanAdapter(requireContext(), listResponseApiModel.getData());
+                            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false);
+                            binding.rv.setLayoutManager(linearLayoutManager);
+                            binding.rv.setAdapter(pengaduanAdapter);
+                            binding.rv.setHasFixedSize(true);
+                            pengaduanAdapter.setOnClickListener(PengaduanFragment.this);
+                            binding.cvDownload.setVisibility(View.VISIBLE);
+                            hideBottomSheet();
+
+
+                        }else {
+                            showToast("Tidak ada data yang ditemukan");
+                            binding.cvDownload.setVisibility(View.GONE);
+                            dateFromState = "";
+                            dateEndState = "";
+                        }
+                    }
+                });
+    }
+
     private void listener() {
         binding.btnLogin.setOnClickListener(v -> {
             startActivity(new Intent(requireContext(), AuthActivity.class));
@@ -128,9 +181,32 @@ public class PengaduanFragment extends Fragment implements OnClickListener {
         });
 
         binding.vOverlay.setOnClickListener(v -> hideBottomSheet());
-        binding.fabAdd.setOnClickListener(v -> showBottomSheet());
+        binding.fabAdd.setOnClickListener(v -> {
+            binding.lrStore.setVisibility(View.VISIBLE);
+            binding.lrFilter.setVisibility(View.GONE);
+
+            showBottomSheet();
+        });
+
+        binding.btnDownload.setOnClickListener(v -> {
+            if (checkPermission()) {
+                formValidateDownload();
+            }else {
+                requestPermission();
+            }
+        });
+
+        binding.btnFilterSubmit.setOnClickListener(v -> formValidateFilter());
 
         binding.btnStoreCart.setOnClickListener(v -> formValidate());
+
+        binding.btnFilter.setOnClickListener(v -> {
+            binding.lrFilter.setVisibility(View.VISIBLE);
+            binding.lrStore.setVisibility(View.GONE);
+            showBottomSheet();
+        });
+        binding.etDateFrom.setOnClickListener(v -> getDatePicker(binding.etDateFrom));
+        binding.etDateEnd.setOnClickListener(v -> getDatePicker(binding.etDateEnd));
 
 
         binding.btnImagePicker.setOnClickListener(v -> {
@@ -143,6 +219,143 @@ public class PengaduanFragment extends Fragment implements OnClickListener {
                 requestPermission();
             }
         });
+    }
+
+    private void formValidateDownload() {
+        if (dateFromState ==  null ||dateFromState.equals("")) {
+            showToast("Silahkan pilih tanggal awal");
+            return;
+        }
+
+        if (dateEndState ==  null ||dateEndState.equals("")) {
+            showToast("Silahkan pilih tanggal awal");
+            return;
+        }
+
+        if (sharedUserModel.getId_kriteria() == 0) {
+            showToast("Silahkan pilih kriteria terlebih dahulu");
+            return;
+        }
+
+        HashMap<String, Object> data = new HashMap<>();
+        data.put("date_from", dateFromState);
+        data.put("date_end", dateEndState);
+        data.put("id_kriteria", sharedUserModel.getId_kriteria());
+
+        downloadLaporan(data);
+    }
+
+    private void downloadLaporan(HashMap<String, Object> data) {
+        binding.cvDownload.setVisibility(View.GONE);
+        binding.progressBarDownload.setVisibility(View.VISIBLE);
+        pengaduanViewModel.downloadPengaduan(data).observe(getViewLifecycleOwner(), new Observer<ResponseApiDownloadModel>() {
+            @Override
+            public void onChanged(ResponseApiDownloadModel responseBodyResponseApiModel) {
+                binding.progressBarDownload.setVisibility(View.GONE);
+                binding.cvDownload.setVisibility(View.VISIBLE);
+                if (responseBodyResponseApiModel.getState().equals(Constants.SUCCESS)
+                        && responseBodyResponseApiModel.getResponseBody() != null) {
+                    try {
+                        // check permisssion
+                        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+
+                            String fileName = "laporan-pengaduan.pdf";
+                            savefile(fileName, responseBodyResponseApiModel.getResponseBody().bytes());
+                        } else {
+                            showToast("Akses tidak diberikan");
+                            requestPermission();
+
+                        }
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            }
+        });
+    }
+
+
+    public void savefile(String fileName, byte[] data) {
+        // Mendapatkan direktori folder Download
+        File downloadDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+
+
+        File file = new File(downloadDir, fileName);
+
+        try {
+            // Membuat FileOutputStream untuk menulis data PDF ke file
+            FileOutputStream fos = new FileOutputStream(file);
+
+            // Menulis data PDF ke file
+            fos.write(data);
+
+            // Tutup FileOutputStream setelah selesai menulis
+            fos.close();
+            openPdfFile(file);
+            Toast.makeText(requireContext(), "Berhasil mengunduh file, silahkan cek folder download", Toast.LENGTH_LONG).show();
+
+
+
+
+
+        } catch (IOException e) {
+            // Tangani kesalahan saat menyimpan file
+            e.printStackTrace();
+            Log.d("savePdfToDownloadFolder", "savePdfToDownloadFolder: " + e.getMessage());
+            Toast.makeText(requireContext(), "Gagal menyimpan PDF", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
+    private void openPdfFile(File file) {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+
+        Uri uri = FileProvider.getUriForFile(requireContext(), "com.example.piatk.fileprovider", file);
+
+        intent.setDataAndType(uri, "application/pdf");
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
+        try {
+            requireContext().startActivity(intent);
+        } catch (ActivityNotFoundException e) {
+            e.printStackTrace();
+            Toast.makeText(requireContext(), "Tidak ada aplikasi untuk membuka gambar", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
+    private void formValidateFilter() {
+        String dateFrom = binding.etDateFrom.getText().toString();
+        String dateEnd = binding.etDateEnd.getText().toString();
+
+        if (dateFrom.isEmpty()) {
+            binding.tilDateFrom.setError("Tidak boleh kosong");
+            return;
+
+        }
+
+        if (dateEnd.isEmpty()) {
+            binding.tilDateEnd.setError("Tidak boleh kosong");
+            return;
+        }
+
+        if (sharedUserModel.getId_kriteria() == 0) {
+            showToast("Silahkan pilih kriteria terlebih dahulu");
+            return;
+        }
+
+        HashMap<String, Object> data = new HashMap<>();
+        data.put("from", dateFrom);
+        data.put("to", dateEnd);
+        data.put("id_kriteria", sharedUserModel.getId_kriteria());
+
+        dateFromState = dateFrom;
+        dateEndState = dateEnd;
+
+
+        filterData(data);
     }
 
     private boolean checkPermission() {
@@ -320,6 +533,8 @@ public class PengaduanFragment extends Fragment implements OnClickListener {
     }
 
     private void hideBottomSheet() {
+        binding.lrFilter.setVisibility(View.GONE);
+        binding.lrStore.setVisibility(View.GONE);
         bottomSheetStore.setState(BottomSheetBehavior.STATE_HIDDEN);
         binding.vOverlay.setVisibility(View.GONE);
         clearInputCart();
@@ -329,7 +544,36 @@ public class PengaduanFragment extends Fragment implements OnClickListener {
         binding.etIsiLaporan.setText("");
         fileUri = null;
         binding.ivGambar.setVisibility(View.GONE);
+        binding.etDateFrom.setText("");
+        binding.etDateEnd.setText("");
         binding.ivGambar.setImageDrawable(null);
+
+    }
+
+    private void getDatePicker(EditText tvDate) {
+        DatePickerDialog datePickerDialog = new DatePickerDialog(getContext());
+        datePickerDialog.setOnDateSetListener(new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                String dateFormatted, monthFormatted;
+                if (month < 10) {
+                    monthFormatted = String.format("%02d", month + 1);
+                }else {
+                    monthFormatted = String.valueOf(month + 1);
+                }
+
+                if (dayOfMonth < 10) {
+                    dateFormatted = String.format("%02d",dayOfMonth);
+                }else {
+                    dateFormatted = String.valueOf(dayOfMonth);
+                }
+
+                tvDate.setText(year + "-" + monthFormatted + "-" + dateFormatted);
+
+            }
+        });
+
+        datePickerDialog.show();
     }
 
     private void getKriteria() {
@@ -370,6 +614,7 @@ public class PengaduanFragment extends Fragment implements OnClickListener {
         if (sharedUserModel.isLogin() == true) {
             if (!sharedUserModel.getRole().equals("pengguna")) {
                 binding.fabAdd.setVisibility(View.GONE);
+                binding.lrMenu.setVisibility(View.VISIBLE);
             }
             getData();
             getKriteria();

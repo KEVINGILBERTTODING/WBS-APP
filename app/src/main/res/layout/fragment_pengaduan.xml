@@ -58,6 +58,7 @@
                              app:contentPadding="@dimen/_5sdp"
                              android:layout_height="wrap_content"
                              app:cardElevation="0dp"
+                             android:visibility="gone"
                              android:id="@+id/cvDownload"
                              android:layout_gravity="center"
                              app:cardCornerRadius="@dimen/_8sdp"

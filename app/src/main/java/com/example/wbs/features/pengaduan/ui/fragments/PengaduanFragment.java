@@ -47,6 +47,8 @@ import com.example.wbs.features.kriteria.viewmodel.KriteriaViewModel;
 import com.example.wbs.features.pengaduan.model.PengaduanModel;
 import com.example.wbs.features.pengaduan.ui.adapters.PengaduanAdapter;
 import com.example.wbs.features.pengaduan.viewmodels.PengaduanViewModel;
+import com.example.wbs.features.profile.models.UserModelProfile;
+import com.example.wbs.features.profile.viewmodels.ProfileViewModel;
 import com.example.wbs.utils.constants.Constants;
 import com.example.wbs.utils.listener.OnClickListener;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
@@ -72,8 +74,10 @@ public class PengaduanFragment extends Fragment implements OnClickListener {
     private PengaduanViewModel pengaduanViewModel;
     private UserService userService;
     private SharedUserModel sharedUserModel;
+    private ProfileViewModel profileViewModel;
     private KriteriaViewModel kriteriaViewModel;
     private PengaduanAdapter pengaduanAdapter;
+    private int idKriteria = 0;
     private BottomSheetBehavior bottomSheetStore;
     private int kriteriaSelected =  0;
     private String dateFromState, dateEndState;
@@ -110,7 +114,7 @@ public class PengaduanFragment extends Fragment implements OnClickListener {
         HashMap<String, Object> data = new HashMap<>();
         data.put("user_id", sharedUserModel.getUser_id());
         data.put("role", sharedUserModel.getRole());
-        data.put("kriteria_id", sharedUserModel.getId_kriteria());
+        data.put("kriteria_id", idKriteria);
         pengaduanViewModel.getPengaduanUser(data)
                 .observe(getViewLifecycleOwner(), new Observer<ResponseApiModel<List<PengaduanModel>>>() {
                     @Override
@@ -173,6 +177,29 @@ public class PengaduanFragment extends Fragment implements OnClickListener {
                     }
                 });
     }
+
+    private void getProfile() {
+        binding.pb.setVisibility(View.VISIBLE);
+        HashMap<String,Object> data = new HashMap<>();
+        data.put("user_id",sharedUserModel.getUser_id());
+        data.put("role", sharedUserModel.getRole());
+        profileViewModel.getProfile(data)
+                .observe(getViewLifecycleOwner(), new Observer<ResponseApiModel<UserModelProfile>>() {
+                    @Override
+                    public void onChanged(ResponseApiModel<UserModelProfile> userModelProfileResponseApiModel) {
+
+                        if (userModelProfileResponseApiModel.getStatus()) {
+                            idKriteria = userModelProfileResponseApiModel.getData().getId_kriteria();
+
+                            getData();
+                        }else {
+                            showToast("Gagal mengambil data");
+                            idKriteria = 0;
+                        }
+                    }
+                });
+    }
+
 
     private void listener() {
         binding.btnLogin.setOnClickListener(v -> {
@@ -341,15 +368,15 @@ public class PengaduanFragment extends Fragment implements OnClickListener {
             return;
         }
 
-        if (sharedUserModel.getId_kriteria() == 0) {
-            showToast("Silahkan pilih kriteria terlebih dahulu");
+        if (idKriteria == 0) {
+            showToast("Kriteria tidak ditemukan");
             return;
         }
 
         HashMap<String, Object> data = new HashMap<>();
         data.put("from", dateFrom);
         data.put("to", dateEnd);
-        data.put("id_kriteria", sharedUserModel.getId_kriteria());
+        data.put("id_kriteria", idKriteria);
 
         dateFromState = dateFrom;
         dateEndState = dateEnd;
@@ -607,6 +634,7 @@ public class PengaduanFragment extends Fragment implements OnClickListener {
     private void init() {
         pengaduanViewModel = new ViewModelProvider(this).get(PengaduanViewModel.class);
         kriteriaViewModel = new ViewModelProvider(this).get(KriteriaViewModel.class);
+        profileViewModel = new ViewModelProvider(this).get(ProfileViewModel.class);
         userService = new UserService();
         userService.initSharedPref(requireContext());
         sharedUserModel = userService.getUserInfo();
@@ -615,8 +643,11 @@ public class PengaduanFragment extends Fragment implements OnClickListener {
             if (!sharedUserModel.getRole().equals("pengguna")) {
                 binding.fabAdd.setVisibility(View.GONE);
                 binding.lrMenu.setVisibility(View.VISIBLE);
+               getProfile();
+
+            }else {
+                getData();
             }
-            getData();
             getKriteria();
         }else {
             binding.lrAccessDenied.setVisibility(View.VISIBLE);

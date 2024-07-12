@@ -241,14 +241,15 @@ public class ChatFragment extends Fragment {
         if (isPengadu) {
             binding.cvChatSender.setVisibility(View.VISIBLE);
             binding.tvIsiPesanSender.setText(pengaduanModel.getIsi_laporan());
-            Glide.with(requireContext())
+            Glide.with(getContext())
                     .load(ApiService.BASE_URL + "/storage/" + pengaduanModel.getFoto())
                     .into(binding.ivPengaduanSender);
+
             binding.tvDateSender.setText(pengaduanModel.getTgl_pengaduan());
         }else {
             binding.cvChat.setVisibility(View.VISIBLE);
             binding.tvIsiPesan.setText(pengaduanModel.getIsi_laporan());
-            Glide.with(requireContext())
+            Glide.with(getContext())
                     .load(ApiService.BASE_URL + "/storage/" + pengaduanModel.getFoto())
                     .into(binding.ivPengaduan);
             binding.tvDate.setText(pengaduanModel.getTgl_pengaduan());

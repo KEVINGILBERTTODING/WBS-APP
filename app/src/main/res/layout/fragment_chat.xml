@@ -129,7 +129,6 @@
 
                                 <ImageView
                                     android:layout_width="@dimen/_150sdp"
-                                    android:background="@color/primary"
                                     android:layout_marginTop="@dimen/_5sdp"
                                     android:id="@+id/ivPengaduan"
                                     android:layout_height="@dimen/_150sdp"/>
@@ -173,7 +172,6 @@
 
                                 <ImageView
                                     android:layout_width="@dimen/_150sdp"
-                                    android:background="@color/primary"
                                     android:layout_marginTop="@dimen/_5sdp"
                                     android:id="@+id/ivPengaduanSender"
                                     android:layout_height="@dimen/_150sdp"/>

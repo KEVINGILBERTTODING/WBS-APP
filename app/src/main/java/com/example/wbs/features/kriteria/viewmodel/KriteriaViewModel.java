@@ -7,6 +7,7 @@ import com.example.wbs.core.models.ResponseApiModel;
 import com.example.wbs.features.kriteria.model.KriteriaModel;
 import com.example.wbs.features.kriteria.repositories.KriteriaRepository;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -27,4 +28,12 @@ public class KriteriaViewModel extends ViewModel {
     public LiveData<ResponseApiModel<List<KriteriaModel>>> getKriteria() {
         return kriteriaRepository.getKriteria();
     }
+
+    public LiveData<ResponseApiModel> storeUpdate(HashMap<String, Object> data) {
+        return kriteriaRepository.store(data);
+    }
+    public LiveData<ResponseApiModel> destroy(int id) {
+        return kriteriaRepository.destroy(id);
+    }
+
 }

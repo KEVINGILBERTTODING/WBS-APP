@@ -123,6 +123,18 @@ public interface ApiService {
             @QueryMap  HashMap<String, Object> data
     );
 
+    @FormUrlEncoded
+    @POST("admin/kriteria/store")
+    Call<ResponseApiModel> storeKriteria(
+            @FieldMap HashMap<String, Object> data
+    );
+
+
+    @DELETE("admin/kriteria/destroy/{id}")
+    Call<ResponseApiModel> destroyKriteria(
+            @Path("id") int id
+    );
+
 
 
 //

@@ -53,23 +53,24 @@
                              android:layout_height="@dimen/_25sdp"
                              android:visibility="gone"
                              android:id="@+id/progressBarDownload"/>
+
                          <androidx.cardview.widget.CardView
-                             android:layout_width="wrap_content"
-                             app:contentPadding="@dimen/_5sdp"
-                             android:layout_height="wrap_content"
-                             app:cardElevation="0dp"
-                             android:visibility="gone"
                              android:id="@+id/cvDownload"
+                             android:layout_width="wrap_content"
+                             android:layout_height="wrap_content"
                              android:layout_gravity="center"
+                             android:visibility="gone"
+                             app:cardBackgroundColor="@color/green"
                              app:cardCornerRadius="@dimen/_8sdp"
-                             app:cardBackgroundColor="@color/green">
+                             app:cardElevation="0dp"
+                             app:contentPadding="@dimen/_5sdp">
 
                              <ImageButton
-                                 android:layout_width="@dimen/_18sdp"
                                  android:id="@+id/btnDownload"
+                                 android:layout_width="@dimen/_18sdp"
                                  android:layout_height="@dimen/_18sdp"
-                                 android:backgroundTint="@color/white"
-                                 android:background="@drawable/ic_download"/>
+                                 android:background="@drawable/ic_download"
+                                 android:backgroundTint="@color/white" />
 
 
                          </androidx.cardview.widget.CardView>

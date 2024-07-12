@@ -102,6 +102,8 @@ public class PetugasFragment extends Fragment implements OnClickListener {
             showBottomSheet();
         });
 
+        binding.btnBack.setOnClickListener(v -> requireActivity().getSupportFragmentManager().popBackStack());
+
         binding.btnDestroy.setOnClickListener(v -> destroy());
 
         binding.btnStoreCart.setOnClickListener(v -> formValidate());

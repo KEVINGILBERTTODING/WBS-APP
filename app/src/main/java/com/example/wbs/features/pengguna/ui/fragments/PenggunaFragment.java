@@ -101,6 +101,7 @@ public class PenggunaFragment extends Fragment implements OnClickListener {
 
 
     private void listener() {
+        binding.btnBack.setOnClickListener(v -> requireActivity().getSupportFragmentManager().popBackStack());
         binding.vOverlay.setOnClickListener(v -> hideBottomSheet());
         binding.fabAdd.setOnClickListener(v -> {
             isEdit = false;

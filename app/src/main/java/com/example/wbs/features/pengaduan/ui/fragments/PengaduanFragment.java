@@ -647,6 +647,7 @@ public class PengaduanFragment extends Fragment implements OnClickListener {
 
             }else {
                 getData();
+                binding.lrMenu.setVisibility(View.GONE);
             }
             getKriteria();
         }else {
